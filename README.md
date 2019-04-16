@@ -52,9 +52,9 @@ Notes of hybrid parallel programming with Fortran on Windows platform. [[中文�
 - [ ] [mpi_reduce_scatter][]
 - [ ] [mpi_scan][]
 
-[mpi_hello_world]: (./MPI/src/mpi_helloworld.f90)
-[mpi_scatterv]: (./MPI/src/mpi_scatterv.f90)
-[mpi_gatherv]: (./MPI/src/mpi_scatterv.f90)
+[mpi_hello_world]: ./MPI/src/mpi_helloworld.f90
+[mpi_scatterv]: ./MPI/src/mpi_scatterv.f90
+[mpi_gatherv]: ./MPI/src/mpi_scatterv.f90
 
 ## OpenMP
 
@@ -73,11 +73,11 @@ Notes of hybrid parallel programming with Fortran on Windows platform. [[中文�
 - [ ] [reduction][]
 
 
-[openmpi_hello_world]: (./OpenMP/src/openmp_helloworld.f90)
-[omp_do]: (./OpenMP/src/omp_do.f90)
+[openmp_hello_world]: ./OpenMP/src/openmp_helloworld.f90
+[omp_do]: ./OpenMP/src/omp_do.f90
 
 ## MPI and OpenMP
 
 - [x] [[HELLO WORLD][mpi_openmp_hello_world]]
 
-[mpi_openmpi_hello_world]: (./MPI_OpenMP/src/mpi_openmp_helloworld.f90)
+[mpi_openmp_hello_world]: ./MPI_OpenMP/src/mpi_openmp_helloworld.f90
