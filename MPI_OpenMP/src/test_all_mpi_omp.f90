@@ -6,30 +6,39 @@
 !
 ! Modified:
 !
-!   16 April 2019
+!   18 April 2019
 !
 ! Author:
 !
 !   Rui Zhang
 !
+!==============================================================================
+!
+!>P test_all_mpi_omp
+!   Entry point for the unified test of mpi and openmp hybird code.
+!
+!   Runs all the tests
+!
     
-    program mpi_openmp_helloworld
+    program test_all_mpi_omp
     
-        use omp_lib
-        use,intrinsic       :: iso_fortran_env,only: error_unit,output_unit
-        
-        implicit none
-        
-        include 'mpif.h'
-        !MPI relevant
-        character(len=64)   :: p_name
-        integer,parameter   :: root=0
-        integer             :: pid,num_p,p_namelen,err
-        integer             :: required,provided
-        !OpenMP relevant
-        integer             :: tid,num_threads
-        
+        !mpi unit
+        use mpi_mod
+        !output unit
+        use,intrinsic       :: iso_fortran_env,only: error_unit,output_unit    
+        !test unit
+        use test_mpiomphelloworld, only: mpiomphelloworld
+        !++
 
+        implicit none
+
+        !MPI relevant
+        integer             :: required,provided
+        !..
+        integer             :: n_errors  !number of errors
+
+        n_errors = 0
+        
         !whether all threads are allowed to make MPI calls
         required = MPI_THREAD_MULTIPLE
         !-----------------------------------------------------------------------------------------------
@@ -42,26 +51,29 @@
         !cheack thread safe mode
         call mpi_init_thread( required,provided,err )
         if ( provided<required ) then
-            write( error_unit,'(A)' ) 'Required MPI thread safe mode is not supported.'
+            write( error_unit,'(A,I2,A)' ) 'Required MPI thread safe mode',required,' is not supported.'
             stop
         endif
         
         call mpi_comm_rank( mpi_comm_world,pid,err )
 
-        !pause for debug
-        if ( pid==root ) pause
+        myid = pid+1
+        call mpi_comm_size( mpi_comm_world,num_p,err )
+
+        if ( pid==root ) then
+            pause
+            write ( output_unit,'(A)' ) 'MPI TEST:'
+        endif
+    
         call mpi_barrier( mpi_comm_world,err )
         
-        call mpi_comm_size( mpi_comm_world,num_p,err )
-        !$omp parallel default(private) shared(pid,num_p) num_threads(4)
-        call mpi_get_processor_name( p_name,p_namelen,err )
-        num_threads = omp_get_num_threads()
-        tid = omp_get_thread_num()
+        !..helloworld
+        call mpiomphelloworld
+        call mpi_barrier( mpi_comm_world,err )
         
-        write ( output_unit,'(A,I2,A,I2,A,I2,A,I2,A,A)' ) 'Thread',tid,'of',num_threads,&
-             ' threads is alive in process',pid,' of',num_p,' processes on ',p_name(1:p_namelen)
-        !$omp end parallel
-        
+        !..++
+    
         call mpi_finalize( err )
 
-    end program
+    end program test_all_mpi_omp
+!*****************************************************************************************

@@ -1,22 +1,38 @@
 !******************************************************************************
 !
-!  Licensing:
+! Licensing:
 !
-!    This code is distributed under the GNU GPLv3.0 license. 
+!   This code is distributed under the GNU GPLv3.0 license. 
 !
-!  Modified:
+! Modified:
 !
-!    16 April 2019
+!   18 April 2019
 !
-!  Author:
+! Author:
 !
-!    Rui Zhang
+!   Rui Zhang
+!
+!==============================================================================
+!
+!>M test_omphelloworld
+!>  >S omphelloworld
 !
     
-    program openmp_helloworld
+    module test_omphelloworld
     
+        use,intrinsic       :: iso_fortran_env, only: output_unit
+            
+        implicit none
+        
+        private
+        public :: omphelloworld
+        
+    contains
+    
+        subroutine omphelloworld
+        
+        !openmp library
         use omp_lib
-        use,intrinsic       :: iso_fortran_env,only: output_unit
         
         implicit none
         
@@ -32,4 +48,6 @@
             ' threads is alive in',num_procs,' processes'
         !$omp end parallel
         
-    end program
+        end subroutine omphelloworld
+    
+    end module test_omphelloworld
