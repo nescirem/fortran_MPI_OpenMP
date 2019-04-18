@@ -17,8 +17,8 @@ Notes of hybrid parallel programming with Fortran on Windows platform. [[中文�
 ## MPI
 
 - [x] [[HELLO WORLD][mpi_hello_world]]
-- [ ] [mpi_send][]
-- [ ] [mpi_recv][]
+- [x] [mpi_send][]
+- [x] [mpi_recv][]
 - [ ] [mpi_sendrecv][]
 - [ ] [mpi_bsend][]
 - [ ] [mpi_ssend][]
@@ -33,12 +33,12 @@ Notes of hybrid parallel programming with Fortran on Windows platform. [[中文�
 - [ ] [mpi_cancel][]
 
 
-- [ ] [mpi_barrier][]
+- [x] [mpi_barrier][]
 
 
-- [ ] [mpi_bcast][]
+- [x] [mpi_bcast][]
 - [ ] [mpi_scatter][]
-- [ ] [mpi_gather][]
+- [x] [mpi_gather][]
 - [x] [mpi_scatterv][]
 - [x] [mpi_gatherv][]
 - [ ] [mpi_alltoall][]
@@ -53,6 +53,11 @@ Notes of hybrid parallel programming with Fortran on Windows platform. [[中文�
 - [ ] [mpi_scan][]
 
 [mpi_hello_world]: ./MPI/src/mpi_helloworld.f90
+[mpi_send]: ./MPI/src/mpi_send.f90
+[mpi_recv]: ./MPI/src/mpi_send.f90
+[mpi_barrier]: ./MPI/src/test_all_mpi.f90
+[mpi_bcast]: ./MPI/src/mpi_send.f90
+[mpi_gather]: ./MPI/src/mpi_send.f90
 [mpi_scatterv]: ./MPI/src/mpi_scatterv.f90
 [mpi_gatherv]: ./MPI/src/mpi_scatterv.f90
 

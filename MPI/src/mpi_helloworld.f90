@@ -1,42 +1,47 @@
 !******************************************************************************
 !
-!  Licensing:
+! Licensing:
 !
-!    This code is distributed under the GNU GPLv3.0 license. 
+!   This code is distributed under the GNU GPLv3.0 license. 
 !
-!  Modified:
+! Modified:
 !
-!    16 April 2019
+!   17 April 2019
 !
-!  Author:
+! Author:
 !
-!    Rui Zhang
+!   Rui Zhang
+!
+!==============================================================================
+!
+!>M test_mpihelloworld
+!>  >S mpihelloworld
 !
     
-    program mpi_helloworld
+    module test_mpihelloworld
     
-        use,intrinsic       :: iso_fortran_env,only: output_unit
-        
+        use,intrinsic       :: iso_fortran_env, only: output_unit
+            
         implicit none
         
-        include 'mpif.h'
-        character(len=64)   :: p_name
-        integer,parameter   :: root=0
-        integer             :: pid,num_p,p_namelen,err
-
-        call mpi_init( err )
-        call mpi_comm_rank( mpi_comm_world,pid,err )
-
-        !pause for debug
-        if ( pid==root ) pause
-        call mpi_barrier( mpi_comm_world,err )
+        private
+        public :: mpihelloworld
+        
+    contains
+    
+        subroutine mpihelloworld
+        
+        !mpi unit
+        use mpi_mod
+        
+        implicit none
 
         !print each process id
         call mpi_comm_size( mpi_comm_world,num_p,err )
         call mpi_get_processor_name( p_name,p_namelen,err )
-        write ( output_unit,'(A,I2,A,I2,A,A)' ) 'process',pid,' of',num_p,&
-            ' is alive on ',p_name(1:p_namelen)
+        write ( output_unit,'(A,I2,A,I2,A,A)' ) 'Hello world from process',pid,' of',num_p,&
+            ' runing on ',p_name(1:p_namelen)
         
-        call mpi_finalize( err )
-
-    end program
+        end subroutine mpihelloworld
+        
+    end module test_mpihelloworld

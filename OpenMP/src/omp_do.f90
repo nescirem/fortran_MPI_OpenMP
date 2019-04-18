@@ -1,19 +1,20 @@
 !******************************************************************************
 !
-!  Licensing:
+! Licensing:
 !
-!    This code is distributed under the GNU GPLv3.0 license. 
+!   This code is distributed under the GNU GPLv3.0 license. 
 !
-!  Modified:
+! Modified:
 !
-!    16 April 2019
+!   16 April 2019
 !
-!  Author:
+! Author:
 !
-!    Rui Zhang
+!   Rui Zhang
 !
-!******************************************************************************
-!   program omp_do
+!==============================================================================
+!
+!>P omp_do
 !
 !   sa = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 !   sb = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]

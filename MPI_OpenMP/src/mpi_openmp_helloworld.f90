@@ -1,16 +1,16 @@
 !******************************************************************************
 !
-!  Licensing:
+! Licensing:
 !
-!    This code is distributed under the GNU GPLv3.0 license. 
+!   This code is distributed under the GNU GPLv3.0 license. 
 !
-!  Modified:
+! Modified:
 !
-!    16 April 2019
+!   16 April 2019
 !
-!  Author:
+! Author:
 !
-!    Rui Zhang
+!   Rui Zhang
 !
     
     program mpi_openmp_helloworld
@@ -32,12 +32,12 @@
 
         !whether all threads are allowed to make MPI calls
         required = MPI_THREAD_MULTIPLE
-        !----------------------|---|--------------------------------------------------------------------|
+        !-----------------------------------------------------------------------------------------------
         !   MPI_THREAD_SINGLE  | 0 | MPI进程仅由一个线程执行，即当前并行机构的MPI进程不支持多线程执行   |
         !  MPI_THREAD_FUNNELED | 1 | MPI进程可以由多个线程执行，但只有主线程能调用MPI函数               |
         ! MPI_THREAD_SERIALIZED| 2 | MPI进程可以由多个线程执行，各个线程能调用MPI函数但并不能同时调用   |
         !  MPI_THREAD_MULTIPLE | 3 | MPI进程可以由多个线程执行，各个线程能在任意时刻调用MPI函数         |
-        !----------------------|---|--------------------------------------------------------------------|
+        !-----------------------------------------------------------------------------------------------
         
         !cheack thread safe mode
         call mpi_init_thread( required,provided,err )

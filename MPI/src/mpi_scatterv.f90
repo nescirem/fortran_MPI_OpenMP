@@ -1,19 +1,21 @@
 !******************************************************************************
 !
-!  Licensing:
+! Licensing:
 !
-!    This code is distributed under the GNU GPLv3.0 license. 
+!   This code is distributed under the GNU GPLv3.0 license. 
 !
-!  Modified:
+! Modified:
 !
-!    16 April 2019
+!   18 April 2019
 !
-!  Author:
+! Author:
 !
-!    Rui Zhang
+!   Rui Zhang
 !
-!******************************************************************************
-!   program mpiscatterv
+!==============================================================================
+!
+!>M test_mpiscatterv
+!>  >S mpiscatterv
 !
 !   sa = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 !   sb = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
@@ -30,26 +32,35 @@
 !   sn = [1,4,9,16,25,36,49,64,81,100,121,142,169,196]
 !
     
-    program mpiscatterv
-    
-        use,intrinsic       :: iso_fortran_env,only: output_unit
+    module test_mpiscatterv
         
         implicit none
         
-        include 'mpif.h'
-        integer,parameter   :: root=0
-        integer             :: pid,num_p,err
-        !..
-        integer                         :: num_node=14
+        private
+        public :: mpiscatterv
+        
+        integer                         :: num_node = 14
+        
+    contains
+    
+        subroutine mpiscatterv( error_cnt )
+        
+        !mpi unit
+        use mpi_mod
+        
+        implicit none
+        
+        !calcu unit
         integer                         :: i,num_slave,r_node,extra
         real                            :: avg_node
         real(8),pointer,dimension(:)    :: sn,sa,sb
         real(8),pointer,dimension(:)    :: r_sn,r_sa,r_sb
         integer,pointer,dimension(:)    :: scounts,rcounts,displs
+        !test unit
+        integer,intent(out)             :: error_cnt
+        real(8)                         :: t_sn
         
-        
-        call mpi_init( err )
-        call mpi_comm_rank( mpi_comm_world,pid,err )
+        error_cnt = 0
         
         !allocate and initialize sa,sb
         if ( pid==root ) then
@@ -61,7 +72,6 @@
         endif
         
         !assign tasks
-        call mpi_comm_size( mpi_comm_world,num_p,err )
         num_slave = num_p-1
         avg_node = num_node/num_slave
         r_node = FLOOR( avg_node-num_node/num_p/num_p )
@@ -91,21 +101,27 @@
                 r_sn(i) = r_sa(i)*r_sb(i)
             enddo
         else !( pid/=root ) then
-            do i=1,rcounts(pid+1)
+            do i=1,rcounts(myid)
                 r_sn(i) = r_sa(i)*r_sb(i)
             enddo
         endif
         
         !gather
-        call mpi_gatherv( r_sn,r_node,mpi_double_precision,sn,rcounts,&
+        call mpi_gatherv ( r_sn,r_node,mpi_double_precision,sn,rcounts,&
                         displs,mpi_double_precision,root,mpi_comm_world,err )
         
-        !print result
+        !compare result
         if ( pid==root ) then
-            write ( output_unit,'(A)' ) 'sn='
-            write ( output_unit,* ) sn
+            do i=1,num_node
+                t_sn = sa(i)*sb(i)
+                if ( sn(i)/=t_sn ) then 
+                    error_cnt = error_cnt + 1
+                    exit
+                endif
+            enddo
         endif
-        
-        call mpi_finalize( err )
 
-    end program
+        end subroutine mpiscatterv
+        
+    end module test_mpiscatterv
+    !******************************************************************************
