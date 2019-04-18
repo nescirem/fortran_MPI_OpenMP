@@ -26,7 +26,8 @@
         use,intrinsic       :: iso_fortran_env,only: error_unit,output_unit    
         !test unit
         use test_omphelloworld, only: omphelloworld
-        use test_ompdo,       only: ompdo
+        use test_ompdo,         only: ompdo
+        use test_ompsections,   only: ompsections
         !++
 
         implicit none
@@ -39,11 +40,19 @@
         call omphelloworld
     
         !..omp do
-        call ompdo( n_errors )
+        call ompdo ( n_errors )
         if ( n_errors/=0 ) then
-            write ( error_unit,'(A,I2)' ) 'OpenMP do :: error:',n_errors
+            write( error_unit,'(A,I2)' ) 'OpenMP do :: error:',n_errors
         else
-            write ( error_unit,'(A)' ) 'OpenMP do :: Pass!'
+            write( error_unit,'(A)' ) 'OpenMP do :: Pass!'
+        endif
+        
+        !..omp sections
+        call ompsections ( n_errors )
+        if ( n_errors/=0 ) then
+            write( error_unit,'(A,I2)' ) 'OpenMP ections :: error:',n_errors
+        else
+            write( error_unit,'(A)' ) 'OpenMP sections :: Pass!'
         endif
         
         !..++

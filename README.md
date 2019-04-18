@@ -64,9 +64,9 @@ Tests of hybrid parallel programming with Fortran on Windows platform. [[中文�
 ## OpenMP
 
 - [x] [[HELLO WORLD][omp_hello_world]]
-- [x] [do][omp_do]
+- [x] [do][]
 - [ ] [for]
-- [ ] [sections]
+- [x] [sections][]
 - [ ] [single]
 - [ ] [master]
 - [ ] [critical]
@@ -79,7 +79,8 @@ Tests of hybrid parallel programming with Fortran on Windows platform. [[中文�
 
 
 [omp_hello_world]: ./OpenMP/src/omp_helloworld.f90
-[omp_do]: ./OpenMP/src/omp_do.f90
+[do]: ./OpenMP/src/omp_do.f90
+[sections]: ./OpenMP/src/omp_sections.f90
 
 ## MPI and OpenMP
 
