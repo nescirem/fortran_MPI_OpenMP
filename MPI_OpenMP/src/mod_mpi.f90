@@ -23,6 +23,7 @@
     
         include 'mpif.h'
     
+        integer             :: required,provided
         integer,parameter   :: root = 0
         integer             :: istat( mpi_status_size )
         integer             :: pid,num_p,p_namelen,err

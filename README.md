@@ -1,6 +1,6 @@
 # Coding with MPI and OpenMP
 
-Tests of hybrid parallel programming with Fortran on Windows platform. [[中文版](./README_cn.md)]
+Tests of hybrid parallel programming with Fortran on Windows standalone platform. [[中文版](./README_cn.md)]
 
 
 

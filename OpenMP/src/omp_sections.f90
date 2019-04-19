@@ -21,10 +21,14 @@
 !   sb = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 !  ------------------------------------------------------------------------
 !                             ¡ý  omp sections   ¡ý
-!  ------------------------------------------------------------------------
+!  -----------------------------------------------------------------------------------------
 ! |                  Thread 0                  |                  Thread 1                  |
 ! | sa = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]    | sb = [1,2,3,4,5,6,7,8, 9,10,11,12,13,14]   |
 ! | sa = [0,1,2,3,4,5,6,7,8, 9,10,11,12,13]    | sb = [2,3,4,5,6,7,8,9,10,11,12,13,14,15]   |
+!                 ¨K                                              ¨L
+!   sa = [0,1,2,3,4,5,6,7,8, 9,10,11,12,13]  sb = [2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+!  -----------------------------------------------------------------------------------------
+!                                 ¡ý  omp do   ¡ý
 !  ------------------------------------------------------------------------------------------
 ! |  Thread 0  |  Thread 1  |  Thread 2  |  Thread 3  |  Thread 0  |  Thread 1  |  Thread 2  |
 ! | sa = [0,1] | sa = [2,3] | sa = [4,5] | sa = [6,7] |sa = [ 8, 9]|sa = [10,11]|sa = [12,13]|
@@ -63,13 +67,14 @@
         
         !sections start and set 2 threads
         call omp_set_num_threads( 2 )
-        !openMP sections
+        !openMP 2 sections
         !$omp parallel sections shared(num_node,sa,sb) private(i)
-        !$omp section
+        !section 1 solved by thread 0
         do i=1,num_node
             sa(i) = sa(i)-1.0
         enddo
         !$omp section
+        !section 2 solved by thread 1
         do i=1,num_node
             sb(i) = sb(i)+1.0
         enddo
@@ -92,7 +97,7 @@
         !$omp end parallel
         
         !test result
-        allocate ( t_sn(num_node) )
+        allocate( t_sn(num_node) )
         do i=1,num_node
             t_sn(i) = 2.0d0*i-sn(i)
         enddo

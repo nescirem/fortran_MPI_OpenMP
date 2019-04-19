@@ -68,7 +68,7 @@
         !$omp end parallel
         
         !test result
-        allocate ( t_sn(num_node) )
+        allocate( t_sn(num_node) )
         do i=1,num_node
             t_sn(i) = sa(i)*sb(i)-sn(i)
         enddo

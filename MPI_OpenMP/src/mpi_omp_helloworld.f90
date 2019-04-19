@@ -12,19 +12,24 @@
 !
 !   Rui Zhang
 !
+!==============================================================================
+!
+!>M test_helloworld
+!>  >S mpiomphelloworld
+!
     
-    module test_mpiomphelloworld
+    module test_helloworld
     
         use,intrinsic       :: iso_fortran_env, only: error_unit,output_unit
             
         implicit none
         
         private
-        public :: mpiomphelloworld
+        public :: helloworld
         
     contains
     
-        subroutine mpiomphelloworld
+        subroutine helloworld
         
         use mpi_mod
         use omp_lib
@@ -34,16 +39,17 @@
         !OpenMP relevant
         integer             :: tid,num_threads
         
-        !$omp parallel default(private) shared(pid,num_p) num_threads(4)
+        call omp_set_num_threads( 4 )
+        !$omp parallel default(private) shared(pid,num_p)
         call mpi_get_processor_name( p_name,p_namelen,err )
         num_threads = omp_get_num_threads()
         tid = omp_get_thread_num()
         
-        write ( output_unit,'(A,I2,A,I2,A,I2,A,I2,A,A)' ) 'Thread',tid,' of',num_threads,&
+        write( output_unit,'(A,I2,A,I2,A,I2,A,I2,A,A)' ) 'Thread',tid,' of',num_threads,&
              ' threads is alive in process',pid,' of',num_p,' processes on ',p_name(1:p_namelen)
         !$omp end parallel
         
 
-        end subroutine mpiomphelloworld
+        end subroutine helloworld
     
-    end module test_mpiomphelloworld
+    end module test_helloworld

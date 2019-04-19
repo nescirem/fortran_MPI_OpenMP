@@ -44,7 +44,7 @@
         tid = omp_get_thread_num()
         num_procs = omp_get_num_threads()
 
-        write ( output_unit,'(A,I2,A,I2,A,I2,A)' ) 'thread',tid,' of',num_threads,&
+        write( output_unit,'(A,I2,A,I2,A,I2,A)' ) 'thread',tid,' of',num_threads,&
             ' threads is alive in',num_procs,' processes'
         !$omp end parallel
         
