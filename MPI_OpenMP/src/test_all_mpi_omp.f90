@@ -40,7 +40,6 @@
         
         !parse the command line 
         call cmd_parser
-        print *,"required=",required
         !whether all threads are allowed to make MPI calls
         !-----------------------------------------------------------------------------------------------
         !   MPI_THREAD_SINGLE  | 0 | multi-thread is not supported in MPI process.                      |
@@ -51,7 +50,6 @@
         
         !cheack thread safe mode
         call mpi_init_thread( required,provided,err )
-        print *,"provided=",provided
         if ( provided<required ) then
             write( error_unit,'(A,I2,A)' ) 'Required MPI thread safe mode',required,' is not supported.'
             stop

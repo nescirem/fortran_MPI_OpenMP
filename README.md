@@ -85,5 +85,7 @@ Tests of hybrid parallel programming with Fortran on Windows standalone platform
 ## MPI and OpenMP
 
 - [x] [[HELLO WORLD][mpi_omp_hello_world]]
+- [x] [[THREAD SAFE][mpi_omp_thread_safe]]
 
 [mpi_omp_hello_world]: ./MPI_OpenMP/src/mpi_omp_helloworld.f90
+[mpi_omp_thread_safe]: ./MPI_OpenMP/src/mpi_omp_threadsafe.f90
