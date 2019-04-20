@@ -31,8 +31,16 @@
         if ( status/=0 ) then
             if ( pid==root ) write( error_unit,'(A)' ) 'Required MPI thread safe mode set as MULTIPLE'
             required = 3
-        elseif ( TRIM(cmd_param)=='-h' ) then
-            if ( pid==root ) write( output_unit,'(A)' ) '-ts [thread_safe_mode]'
+        elseif ( TRIM(cmd_param)=='-h' .or. TRIM(cmd_param)=='-help' ) then
+            if ( pid==root ) write( output_unit,'(9(A,/))' ) ' ',&
+            '-ts <thread_safe_mode>',&
+            '         specify the thread safe mode',&
+            '         indicated by <thread_safe_mode> as described below',&
+            '             single      multi-thread is not supported in MPI process',&
+            '             funneled    only main thread in each process can make MPI calls',&
+            '             serialized  multiple threads may make MPI calls, but only one at a ',&
+            '                         time',&
+            '             multiple    multiple threads may call MPI, with no restrictions'
             stop
         elseif ( TRIM(cmd_param)=='-ts' ) then
             call GET_COMMAND_ARGUMENT( 2,cmd_param,length,status )

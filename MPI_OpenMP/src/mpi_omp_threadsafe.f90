@@ -61,10 +61,11 @@
                 do i_t=0,num_threads-1
                     tag = 100+i_t*num_threads+tid+1
                     call mpi_recv( r_tid,1,mpi_int,root,tag,mpi_comm_world,istat,err )
-                    write( output_unit,'(A,I2,A,I2,A,I2,A)' ) 'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
-                enddo 
+                    write( output_unit,'(A,I2,A,I2,A,I2,A)' ) &
+                        'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
+                enddo
             endif
-        else if ( required==MPI_THREAD_SERIALIZED ) then
+        elseif ( required==MPI_THREAD_SERIALIZED ) then
             !$omp critical
             if ( pid==root ) then
                 do i=1,num_slave
@@ -81,11 +82,12 @@
                 do i_t=0,num_threads-1
                     tag = 100+i_t*num_threads+tid+1
                     call mpi_recv( r_tid,1,mpi_int,root,tag,mpi_comm_world,istat,err )
-                    write( output_unit,'(A,I2,A,I2,A,I2,A)' ) 'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
-                enddo 
+                    write( output_unit,'(A,I2,A,I2,A,I2,A)' ) &
+                        'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
+                enddo
             endif
             !$omp end critical
-        else if ( required==MPI_THREAD_FUNNELED ) then
+        elseif ( required==MPI_THREAD_FUNNELED ) then
             if ( pid==root ) then
                 do i=1,num_slave
                     tid = omp_get_thread_num()
@@ -97,7 +99,8 @@
                 tag = 100
                 if (tid==0) then
                     call mpi_recv( r_tid,1,mpi_int,root,tag,mpi_comm_world,istat,err )
-                    write( output_unit,'(A,I2,A,I2,A,I2,A)' ) 'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
+                    write( output_unit,'(A,I2,A,I2,A,I2,A)' ) &
+                        'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
                 endif
             endif
         endif
