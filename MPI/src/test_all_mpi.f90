@@ -2,7 +2,7 @@
 !
 ! Licensing:
 !
-!   This code is distributed under the GNU GPLv3.0 license. 
+!   This code is distributed under the MIT license. 
 !
 ! Modified:
 !
@@ -10,7 +10,7 @@
 !
 ! Author:
 !
-!   Rui Zhang
+!   Nescirem
 !
 !==============================================================================
 !
@@ -44,7 +44,8 @@
         call mpi_comm_size( mpi_comm_world,num_p,err )
         
         if ( num_p/=4 ) then
-            write ( output_unit,'(A)' ) 'Only parallel with 4 processes is supported, please use ''mpiexec -n 4 MPI.exe'' instead.'
+            write ( output_unit,'(A)' ) &
+                'Only parallel with 4 processes is supported, please use ''mpiexec -n 4 MPI.exe'' instead.'
             stop
         endif
         if ( pid==root ) then

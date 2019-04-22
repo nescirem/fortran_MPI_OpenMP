@@ -2,7 +2,7 @@
 !
 ! Licensing:
 !
-!   This code is distributed under the GNU GPLv3.0 license. 
+!   This code is distributed under the MIT license. 
 !
 ! Modified:
 !
@@ -10,7 +10,7 @@
 !
 ! Author:
 !
-!   Rui Zhang
+!   Nescirem
 !
 !==============================================================================
 !

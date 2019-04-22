@@ -1,6 +1,6 @@
 # Coding with MPI and OpenMP
 
-Tests of hybrid parallel programming with Fortran on Windows standalone platform. [[中文版](./README_cn.md)]
+Practice of hybrid parallel programming with Fortran on Windows standalone platform. [[中文版](./README_cn.md)]
 
 
 
@@ -9,7 +9,7 @@ Tests of hybrid parallel programming with Fortran on Windows standalone platform
 - OS: Windows 10
 - IDE: Visual Studio 2017
 - Compeller: Intel Visual Fortran 2019
-- Software: MPICH2
+- Software: MPICH2-1.4.1p1
 
 
 # Example codes
@@ -89,3 +89,7 @@ Tests of hybrid parallel programming with Fortran on Windows standalone platform
 
 [mpi_omp_hello_world]: ./MPI_OpenMP/src/mpi_omp_helloworld.f90
 [mpi_omp_thread_safe]: ./MPI_OpenMP/src/mpi_omp_threadsafe.f90
+
+# Reference
+
+https://cvw.cac.cornell.edu/topics

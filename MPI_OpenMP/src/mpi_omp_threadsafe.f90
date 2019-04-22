@@ -2,7 +2,7 @@
 !
 ! Licensing:
 !
-!   This code is distributed under the GNU GPLv3.0 license. 
+!   This code is distributed under the MIT license. 
 !
 ! Modified:
 !
@@ -10,7 +10,7 @@
 !
 ! Author:
 !
-!   Rui Zhang
+!   Nescirem
 !
 !==============================================================================
 !
@@ -92,16 +92,14 @@
                 do i=1,num_slave
                     tid = omp_get_thread_num()
                     tag = 100
-                    if (tid==0) call mpi_send( tid,1,mpi_int,i,tag,mpi_comm_world,err )
+                    call mpi_send( tid,1,mpi_int,i,tag,mpi_comm_world,err )
                 enddo
             else !( pid/=root ) then
                 tid = omp_get_thread_num()
                 tag = 100
-                if (tid==0) then
-                    call mpi_recv( r_tid,1,mpi_int,root,tag,mpi_comm_world,istat,err )
-                    write( output_unit,'(A,I2,A,I2,A,I2,A)' ) &
-                        'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
-                endif
+                call mpi_recv( r_tid,1,mpi_int,root,tag,mpi_comm_world,istat,err )
+                if ( tid==0 ) write( output_unit,'(A,I2,A,I2,A,I2,A)' ) &
+                    'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
             endif
         endif
         !$omp end parallel
