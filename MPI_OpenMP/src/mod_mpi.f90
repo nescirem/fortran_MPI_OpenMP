@@ -6,7 +6,7 @@
 !
 ! Modified:
 !
-!   18 April 2019
+!   22 April 2019
 !
 ! Author:
 !
@@ -21,7 +21,11 @@
     
         implicit none
     
+#ifdef _WIN64
         include 'mpif.h'
+#else
+        include 'mpif_x86.h'
+#endif
     
         integer             :: required,provided
         integer,parameter   :: root = 0

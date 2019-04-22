@@ -6,7 +6,7 @@
 !
 ! Modified:
 !
-!   18 April 2019
+!   22 April 2019
 !
 ! Author:
 !
@@ -30,6 +30,7 @@
         use test_mpihelloworld, only: mpihelloworld
         use test_mpiscatterv,   only: mpiscatterv
         use test_mpisend,       only: mpisend
+        use test_mpisendrecv,   only: mpisendrecv
         !++
 
         implicit none
@@ -42,10 +43,21 @@
         call mpi_comm_rank( mpi_comm_world,pid,err )
         myid = pid+1
         call mpi_comm_size( mpi_comm_world,num_p,err )
+        num_slave = num_p-1
+        if ( pid==root ) then
+            myleft = num_slave
+            myright = myid
+        elseif ( pid==num_slave ) then
+            myleft = pid-1
+            myright = root
+        else
+            myleft = pid-1
+            myright = myid
+        endif
         
         if ( num_p/=4 ) then
             write ( output_unit,'(A)' ) &
-                'Only parallel with 4 processes is supported, please use ''mpiexec -n 4 MPI.exe'' instead.'
+                'This program used exactly 4 processes, please use ''mpiexec -n 4 MPI.exe'' instead.'
             stop
         endif
         if ( pid==root ) then
@@ -76,6 +88,17 @@
                 write ( error_unit,'(A,I2)' ) 'mpi_send, mpi_recv, mpi_bcast, mpi_gather :: error:',n_errors
             else
                 write ( error_unit,'(A)' ) 'mpi_send, mpi_recv, mpi_bcast, mpi_gather :: Pass!'
+            endif
+        endif
+        call mpi_barrier( mpi_comm_world,err )
+        
+        !..mpi_sendrecv
+        call mpisendrecv( n_errors )
+        if ( pid==root ) then
+            if ( n_errors/=0 ) then
+                write ( error_unit,'(A,I2)' ) 'mpi_sendrecv :: error:',n_errors
+            else
+                write ( error_unit,'(A)' ) 'mpi_sendrecv :: Pass!'
             endif
         endif
         call mpi_barrier( mpi_comm_world,err )

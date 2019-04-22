@@ -19,7 +19,7 @@ Practice of hybrid parallel programming with Fortran on Windows standalone platf
 - [x] [[HELLO WORLD][mpi_hello_world]]
 - [x] [mpi_send][]
 - [x] [mpi_recv][]
-- [ ] [mpi_sendrecv]
+- [x] [mpi_sendrecv][]
 - [ ] [mpi_bsend]
 - [ ] [mpi_ssend]
 - [ ] [mpi_rsend]
@@ -31,6 +31,7 @@ Practice of hybrid parallel programming with Fortran on Windows standalone platf
 - [ ] [mpi_probe]
 - [ ] [mpi_iprobe]
 - [ ] [mpi_cancel]
+
 
 
 - [x] [mpi_barrier][]
@@ -55,6 +56,7 @@ Practice of hybrid parallel programming with Fortran on Windows standalone platf
 [mpi_hello_world]: ./MPI/src/mpi_helloworld.f90
 [mpi_send]: ./MPI/src/mpi_send.f90
 [mpi_recv]: ./MPI/src/mpi_send.f90
+[mpi_sendrecv]: ./MPI/src/mpi_sendrecv.f90
 [mpi_barrier]: ./MPI/src/test_all_mpi.f90
 [mpi_bcast]: ./MPI/src/mpi_send.f90
 [mpi_gather]: ./MPI/src/mpi_send.f90

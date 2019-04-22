@@ -6,7 +6,7 @@
 !
 ! Modified:
 !
-!   18 April 2019
+!   22 April 2019
 !
 ! Author:
 !
@@ -53,3 +53,20 @@
         end subroutine helloworld
     
     end module test_helloworld
+!******************************************************************************
+
+!******************************************************************************
+#ifndef INTEGRATED_TESTS
+    program test_mpiomp_helloworld
+        
+        use test_helloworld , only: helloworld
+        implicit none
+        integer :: n_errors
+        
+        n_errors = 0
+        call helloworld( n_errors )
+        if ( n_errors /= 0 ) stop 1
+        
+    end program test_mpiomp_helloworld
+#endif
+!******************************************************************************

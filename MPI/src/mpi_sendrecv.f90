@@ -40,94 +40,47 @@
 !        [18,21,18,28]
 !        [19,18,14,12]
 !
+    
+    
 
-    module test_mpisend
+    module test_mpisendrecv
         
         implicit none
         
         private
-        public :: mpisend
+        public :: mpisendrecv
         
     contains
     
-        subroutine mpisend( error_cnt )
+        subroutine mpisendrecv( error_cnt )
     
         !mpi unit
         use mpi_mod
         
         implicit none
         
-        !calcu unit
-        real                            :: random_real
-        integer                         :: i,j,tag
-        real(8)                         :: sa(4,3),sb(3,4),sn(4,4)
-        real(8)                         :: r_sb(3),r_sn(4)
+        integer                         :: i,recv_id,send_tag,recv_tag
         !test unit
         integer,intent(out)             :: error_cnt
-        real(8)                         :: t_sn(4,4)
         
         error_cnt = 0
         
-        if ( pid==root ) then
-            
-            do j=1,3
-                do i=1,4
-                    call RANDOM_NUMBER( random_real )
-                    sa(i,j)= random_real+1.0
-                enddo
-            enddo
-            do j=1,4
-                do i=1,3
-                    call RANDOM_NUMBER( random_real )
-                    sb(i,j)= random_real+1.0
-                enddo
-            enddo
-
-            do i=1,3
-                r_sb(i)=sb(i,1)
-            enddo
-            
-            do i=1,num_slave
-                tag = 11
-                call mpi_send( sb(1,i+1),3,mpi_double_precision,i,tag,&
-                    mpi_comm_world,err )
-            enddo
-            
-        else !if( pid/=root ) then
-            tag = 11
-            call mpi_recv( r_sb,3,mpi_double_precision,root,tag,&
-                mpi_comm_world,istat,err )
-        endif
+        send_tag = 12+pid
+        recv_tag = 12+myleft
+        call mpi_sendrecv( pid,1,mpi_int,myright,send_tag,recv_id,1,mpi_int,myleft,recv_tag,mpi_comm_world,istat,err )
         
+        if ( recv_id/=myleft ) error_cnt =error_cnt+1
         
-        call mpi_bcast( sa,12,mpi_double_precision,root,mpi_comm_world,err)
+        end subroutine mpisendrecv
         
-        do i=1,4
-            r_sn(i) = 0
-            do j=1,3
-                r_sn(i)= r_sn(i)+sa(i,j)*r_sb(j)
-            enddo
-        enddo
-        
-        call mpi_gather( r_sn,4,mpi_double_precision,sn,4,mpi_double_precision,&
-            root,mpi_comm_world,err)
-        
-        if ( pid==root ) then
-            t_sn = MATMUL( sa,sb )
-            t_sn = t_sn-sn
-            if ( ANY(t_sn/=0.0d0) ) error_cnt = error_cnt+1
-        endif
-        
-        end subroutine mpisend
-        
-    end module test_mpisend
+    end module test_mpisendrecv
 !******************************************************************************
 
 !******************************************************************************
 #ifndef INTEGRATED_TESTS
-    program test_mpi_send
+    program test_mpi_sendrecv
         
-        use test_mpisend , only: mpisend
+        use test_mpisendrecv , only: mpisendrecv
         implicit none
         integer :: n_errors
         
@@ -135,6 +88,6 @@
         call mpisend( n_errors )
         if ( n_errors /= 0 ) stop 1
         
-    end program test_mpi_send
+    end program test_mpi_sendrecv
 #endif
 !******************************************************************************

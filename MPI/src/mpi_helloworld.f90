@@ -6,7 +6,7 @@
 !
 ! Modified:
 !
-!   17 April 2019
+!   22 April 2019
 !
 ! Author:
 !
@@ -45,3 +45,20 @@
         end subroutine mpihelloworld
         
     end module test_mpihelloworld
+!******************************************************************************
+
+!******************************************************************************
+#ifndef INTEGRATED_TESTS
+    program test_mpi_helloworld
+        
+        use test_mpihelloworld , only: mpihelloworld
+        implicit none
+        integer :: n_errors
+        
+        n_errors = 0
+        call mpihelloworld( n_errors )
+        if ( n_errors /= 0 ) stop 1
+        
+    end program test_mpi_helloworld
+#endif
+!******************************************************************************

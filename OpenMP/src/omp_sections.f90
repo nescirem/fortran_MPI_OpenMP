@@ -6,7 +6,7 @@
 !
 ! Modified:
 !
-!   18 April 2019
+!   22 April 2019
 !
 ! Author:
 !
@@ -101,8 +101,24 @@
         do i=1,num_node
             t_sn(i) = 2.0d0*i-sn(i)
         enddo
-        if ( ANY(t_sn/=0.0d0) ) error_cnt = error_cnt + 1
+        if ( ANY(t_sn/=0.0d0) ) error_cnt = error_cnt+1
         
         end subroutine ompsections
         
     end module test_ompsections
+    
+!******************************************************************************
+#ifndef INTEGRATED_TESTS
+    program test_omp_sections
+        
+        use test_ompsections , only: ompsections
+        implicit none
+        integer :: n_errors
+        
+        n_errors = 0
+        call ompsections( n_errors )
+        if ( n_errors /= 0 ) stop 1
+        
+    end program test_omp_ompsections
+#endif
+!******************************************************************************

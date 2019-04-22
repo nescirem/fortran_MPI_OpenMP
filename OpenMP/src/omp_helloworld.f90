@@ -6,7 +6,7 @@
 !
 ! Modified:
 !
-!   18 April 2019
+!   22 April 2019
 !
 ! Author:
 !
@@ -51,3 +51,20 @@
         end subroutine omphelloworld
     
     end module test_omphelloworld
+!******************************************************************************
+
+!******************************************************************************
+#ifndef INTEGRATED_TESTS
+    program test_omp_helloworld
+        
+        use test_omphelloworld , only: omphelloworld
+        implicit none
+        integer :: n_errors
+        
+        n_errors = 0
+        call omphelloworld( n_errors )
+        if (n_errors /= 0) stop 1
+        
+    end program test_omp_helloworld
+#endif
+!******************************************************************************

@@ -6,7 +6,7 @@
 !
 ! Modified:
 !
-!   18 April 2019
+!   22 April 2019
 !
 ! Author:
 !
@@ -108,3 +108,20 @@
         end subroutine thread_safe
         
     end module test_thread_safe
+!******************************************************************************
+
+!******************************************************************************
+#ifndef INTEGRATED_TESTS
+    program test_mpiomp_thread_safe
+        
+        use test_thread_safe , only: thread_safe
+        implicit none
+        integer :: n_errors
+        
+        n_errors = 0
+        call thread_safe( n_errors )
+        if ( n_errors /= 0 ) stop 1
+        
+    end program test_mpiomp_thread_safe
+#endif
+!******************************************************************************

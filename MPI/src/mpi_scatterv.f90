@@ -6,7 +6,7 @@
 !
 ! Modified:
 !
-!   18 April 2019
+!   22 April 2019
 !
 ! Author:
 !
@@ -16,20 +16,6 @@
 !
 !>M test_mpiscatterv
 !>  >S mpiscatterv
-!
-!   sa = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
-!   sb = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
-!  ------------------------------------------------------------------------
-!                             ¡ý  scatterv   ¡ý
-!  -------------------------------------------------------------------------------------------
-! |     Process 0    |       Process 1     |       Process 2       |           Process 3      |
-! | r_sa = [1,2,?,?] | r_sa = [3,4,5,6]    | r_sa = [7,8,9,10]     | r_sa = [11,12,13,14]     |
-! | r_sb = [1,2,?,?] | r_sb = [3,4,5,6]    | r_sb = [7,8,9,10]     | r_sb = [11,12,13,14]     |
-! | r_sn = [1,4,?,?] | r_sn = [9,16,25,36] | r_sn = [49,64,81,100] | r_sn = [121,142,169,196] |
-!  -------------------------------------------------------------------------------------------
-!                             ¡ý   gatherv   ¡ý
-!  ------------------------------------------------------------------------
-!   sn = [1,4,9,16,25,36,49,64,81,100,121,142,169,196]
 !
     
     module test_mpiscatterv
@@ -51,7 +37,7 @@
         implicit none
         
         !calcu unit
-        integer                         :: i,num_slave,r_node,extra
+        integer                         :: i,r_node,extra
         real                            :: avg_node
         real(8),pointer,dimension(:)    :: sn,sa,sb
         real(8),pointer,dimension(:)    :: r_sn,r_sa,r_sb
@@ -72,7 +58,6 @@
         endif
         
         !assign tasks
-        num_slave = num_p-1
         avg_node = num_node/num_slave
         r_node = FLOOR( avg_node-num_node/num_p/num_p )
         extra = num_node-num_slave*r_node
@@ -115,7 +100,7 @@
             do i=1,num_node
                 t_sn = sa(i)*sb(i)
                 if ( sn(i)/=t_sn ) then 
-                    error_cnt = error_cnt + 1
+                    error_cnt = error_cnt+1
                     exit
                 endif
             enddo
@@ -124,4 +109,20 @@
         end subroutine mpiscatterv
         
     end module test_mpiscatterv
-    !******************************************************************************
+!******************************************************************************
+
+!******************************************************************************
+#ifndef INTEGRATED_TESTS
+    program test_mpi_scatterv
+        
+        use test_mpiscatterv , only: mpiscatterv
+        implicit none
+        integer :: n_errors
+        
+        n_errors = 0
+        call mpiscatterv( n_errors )
+        if ( n_errors /= 0 ) stop 1
+        
+    end program test_mpi_scatterv
+#endif
+!******************************************************************************
