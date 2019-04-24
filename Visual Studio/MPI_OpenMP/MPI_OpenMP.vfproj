@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{5689AACE-27FD-45B6-A61C-AF5D60099577}">
+	<Platforms>
+		<Platform Name="Win32"/>
+		<Platform Name="x64"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32" TargetName="$(ProjectName)">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Preprocess="preprocessYes" AdditionalIncludeDirectories="..\..\MPI_OpenMP\src\include" PreprocessorDefinitions="INTEGRATED_TESTS;DEBUG" OpenMP="OpenMPParallelCode" WarnInterfaces="true" Traceback="true" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="..\..\MPI_OpenMP\src\lib" GenerateDebugInformation="true" SubSystem="subSystemConsole" AdditionalDependencies="fmpich2_x86.lib"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="if not exist ..\binary\x86 md ..\binary\x86 &#xA;copy /y $(ConfigurationName)\$(ProjectName).exe ..\binary\x86\$(ProjectName)d.exe"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" TargetName="$(ProjectName)">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" Preprocess="preprocessYes" AdditionalIncludeDirectories="..\..\MPI_OpenMP\src\include" PreprocessorDefinitions="INTEGRATED_TESTS" OpenMP="OpenMPParallelCode" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="..\..\MPI_OpenMP\src\lib" SubSystem="subSystemConsole" AdditionalDependencies="fmpich2_x86.lib"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="if not exist ..\binary\x86 md ..\binary\x86 &#xA;copy /y $(ConfigurationName)\$(ProjectName).exe ..\binary\x86\$(ProjectName).exe"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Debug|x64" TargetName="$(ProjectName)">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Preprocess="preprocessYes" AdditionalIncludeDirectories="..\..\MPI_OpenMP\src\include" PreprocessorDefinitions="INTEGRATED_TESTS;DEBUG" OpenMP="OpenMPParallelCode" WarnInterfaces="true" Traceback="true" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="..\..\MPI_OpenMP\src\lib" GenerateDebugInformation="true" SubSystem="subSystemConsole" AdditionalDependencies="fmpich2.lib"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="if not exist ..\binary\x64 md ..\binary\x64 &#xA;copy /y $(PlatformName)\$(ConfigurationName)\$(ProjectName).exe ..\binary\x64\$(ProjectName)d.exe"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|x64" TargetName="$(ProjectName)">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" Preprocess="preprocessYes" AdditionalIncludeDirectories="..\..\MPI_OpenMP\src\include" PreprocessorDefinitions="INTEGRATED_TESTS" OpenMP="OpenMPParallelCode" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="..\..\MPI_OpenMP\src\lib" SubSystem="subSystemConsole" AdditionalDependencies="fmpich2.lib"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="if not exist ..\binary\x64 md ..\binary\x64 &#xA;copy /y $(PlatformName)\$(ConfigurationName)\$(ProjectName).exe ..\binary\x64\$(ProjectName).exe"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Header Files" Filter="fi;fd;h;inc" SourceControlFiles="false"/>
+		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
+		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath="..\..\MPI_OpenMP\src\cmd_parser.f90"/>
+		<File RelativePath="..\..\MPI_OpenMP\src\mod_mpi.f90"/>
+		<File RelativePath="..\..\MPI_OpenMP\src\mpi_END.f90"/>
+		<File RelativePath="..\..\MPI_OpenMP\src\mpi_omp_helloworld.f90"/>
+		<File RelativePath="..\..\MPI_OpenMP\src\mpi_omp_threadsafe.f90"/>
+		<File RelativePath="..\..\MPI_OpenMP\src\mpi_START.f90"/>
+		<File RelativePath="..\..\MPI_OpenMP\src\test_all_mpi_omp.f90"/></Filter></Files>
+	<Globals/></VisualStudioProject>

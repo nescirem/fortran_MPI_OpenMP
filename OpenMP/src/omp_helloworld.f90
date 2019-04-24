@@ -59,11 +59,8 @@
         
         use test_omphelloworld , only: omphelloworld
         implicit none
-        integer :: n_errors
         
-        n_errors = 0
-        call omphelloworld( n_errors )
-        if (n_errors /= 0) stop 1
+        call omphelloworld
         
     end program test_omp_helloworld
 #endif

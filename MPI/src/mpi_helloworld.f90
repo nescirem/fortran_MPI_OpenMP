@@ -53,11 +53,14 @@
         
         use test_mpihelloworld , only: mpihelloworld
         implicit none
-        integer :: n_errors
         
-        n_errors = 0
-        call mpihelloworld( n_errors )
-        if ( n_errors /= 0 ) stop 1
+        !start parallel execution
+        call mpi_start
+        
+        call mpihelloworld
+        
+        !end parallel execution
+        call mpi_end
         
     end program test_mpi_helloworld
 #endif

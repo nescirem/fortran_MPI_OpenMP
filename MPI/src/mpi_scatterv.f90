@@ -114,15 +114,22 @@
 !******************************************************************************
 #ifndef INTEGRATED_TESTS
     program test_mpi_scatterv
-        
+
         use test_mpiscatterv , only: mpiscatterv
         implicit none
         integer :: n_errors
-        
+
         n_errors = 0
+
+        !start parallel execution
+        call mpi_start
+
         call mpiscatterv( n_errors )
         if ( n_errors /= 0 ) stop 1
-        
+
+        !end parallel execution
+        call mpi_end
+
     end program test_mpi_scatterv
 #endif
 !******************************************************************************

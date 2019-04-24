@@ -35,5 +35,4 @@
         integer             :: p_namelen
         character(len=64)   :: p_name
         
-    
     end module mpi_mod

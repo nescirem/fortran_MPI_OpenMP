@@ -19,7 +19,7 @@
     subroutine cmd_parser
     
         !mpi unit
-        use mpi_mod,    only: required
+        use mpi_mod,        only: required,pid,root
         !output unit
         use,intrinsic       :: iso_fortran_env,only: error_unit,output_unit    
         

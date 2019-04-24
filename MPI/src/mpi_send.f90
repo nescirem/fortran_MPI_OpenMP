@@ -126,15 +126,31 @@
 !******************************************************************************
 #ifndef INTEGRATED_TESTS
     program test_mpi_send
-        
-        use test_mpisend , only: mpisend
+
+        !mpi unit
+        use mpi_mod,        only: num_p
+        !test unit
+        use test_mpisend,   only: mpisend
         implicit none
         integer :: n_errors
-        
+
         n_errors = 0
+
+        !start parallel execution
+        call mpi_start
+        !special case only
+        if ( num_p/=4 ) then
+            write ( output_unit,'(A)' ) &
+                'This program used exactly 4 processes, please use ''mpiexec -n 4 MPI.exe'' instead.'
+            stop
+        endif
+
         call mpisend( n_errors )
         if ( n_errors /= 0 ) stop 1
-        
+
+        !end parallel execution
+        call mpi_end
+
     end program test_mpi_send
 #endif
 !******************************************************************************

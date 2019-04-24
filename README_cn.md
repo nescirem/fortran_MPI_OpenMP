@@ -1,6 +1,6 @@
 # MPI与OpenMP的使用
 
-这是一个Windows平台的Fortran混合并行编程学习笔记。[[English edition](./README.md)]
+这是一个基于单机Windows平台的Fortran混合并行编程学习笔记。[[English edition](./README.md)]
 
 
 

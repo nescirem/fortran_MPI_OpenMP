@@ -58,15 +58,20 @@
 !******************************************************************************
 #ifndef INTEGRATED_TESTS
     program test_mpiomp_helloworld
-        
+
         use test_helloworld , only: helloworld
         implicit none
-        integer :: n_errors
-        
-        n_errors = 0
-        call helloworld( n_errors )
-        if ( n_errors /= 0 ) stop 1
-        
+
+        !parse the command line
+        call cmd_parser
+        !start parallel execution
+        call mpi_start
+
+        call helloworld
+
+        !end parallel execution
+        call mpi_end
+
     end program test_mpiomp_helloworld
 #endif
 !******************************************************************************

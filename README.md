@@ -8,7 +8,7 @@ Practice of hybrid parallel programming with Fortran on Windows standalone platf
 
 - OS: Windows 10
 - IDE: Visual Studio 2017
-- Compeller: Intel Visual Fortran 2019
+- Compiler: Intel Visual Fortran 2018
 - Software: MPICH2-1.4.1p1
 
 
@@ -31,7 +31,6 @@ Practice of hybrid parallel programming with Fortran on Windows standalone platf
 - [ ] [mpi_probe]
 - [ ] [mpi_iprobe]
 - [ ] [mpi_cancel]
-
 
 
 - [x] [mpi_barrier][]

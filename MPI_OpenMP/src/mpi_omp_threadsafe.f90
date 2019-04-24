@@ -36,7 +36,7 @@
         
         implicit none
         
-        integer             :: i,i_t,num_slave,tag
+        integer             :: i,i_t,tag
         !OpenMP relevant
         integer             :: tid,num_threads
         integer             :: r_tid
@@ -89,17 +89,21 @@
             !$omp end critical
         elseif ( required==MPI_THREAD_FUNNELED ) then
             if ( pid==root ) then
-                do i=1,num_slave
-                    tid = omp_get_thread_num()
-                    tag = 100
-                    call mpi_send( tid,1,mpi_int,i,tag,mpi_comm_world,err )
-                enddo
+                tid = omp_get_thread_num()
+                tag = 100
+                if ( tid==0 ) then
+                    do i=1,num_slave
+                        call mpi_send( tid,1,mpi_int,i,tag,mpi_comm_world,err )
+                    enddo
+                endif
             else !( pid/=root ) then
                 tid = omp_get_thread_num()
                 tag = 100
-                call mpi_recv( r_tid,1,mpi_int,root,tag,mpi_comm_world,istat,err )
-                if ( tid==0 ) write( output_unit,'(A,I2,A,I2,A,I2,A)' ) &
-                    'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
+                if ( tid==0 ) then
+                    call mpi_recv( r_tid,1,mpi_int,root,tag,mpi_comm_world,istat,err )
+                    write( output_unit,'(A,I2,A,I2,A,I2,A)' ) &
+                        'Thread',tid,' in process',pid,' received greeting from thread',r_tid,' in process 0'
+                endif
             endif
         endif
         !$omp end parallel
@@ -116,11 +120,16 @@
         
         use test_thread_safe , only: thread_safe
         implicit none
-        integer :: n_errors
         
-        n_errors = 0
-        call thread_safe( n_errors )
-        if ( n_errors /= 0 ) stop 1
+        !parse the command line 
+        call cmd_parser
+        !start parallel execution
+        call mpi_start
+        
+        call thread_safe
+        
+        !end parallel execution
+        call mpi_end
         
     end program test_mpiomp_thread_safe
 #endif
