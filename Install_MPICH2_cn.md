@@ -71,5 +71,5 @@ MPICH已经放弃Windows，其官网上最新的Windows release是2011年9月的
 16. 以Debug模式运行程序，待到命令行输出`Fortran Pause - Enter command<CR> or <CR> to continue.`
 17. 激活Visual Studio窗口`Ctrl+Alt+P`附加到当前待调试进程
        ![MPIAttachToProcess](./image/MPIAttachToProcess.png)
-18. 设置断点，继续运行程序
+18. 设置断点，鼠标点击激活调试CMD窗口并按回车继续运行程序
        ![MPIDebug](./image/MPIDebug.png)
